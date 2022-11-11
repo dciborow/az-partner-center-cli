@@ -35,7 +35,7 @@ def _inject_pid(file_name_full_path, pid):
         zip_ref.extractall(file_name_full_path.replace(".zip", "-temp"))
     with open(file_name_full_path.replace(".zip", "-temp/mainTemplate.json"), "rt", encoding="utf8") as fin:
         data = fin.read()
-        data = re.sub(r"pid-(.*)-partnercenter", "pid-" + pid + "-partnercenter", data)
+        data = re.sub(r"pid-(.*)-partnercenter", f"pid-{pid}-partnercenter", data)
 
     with open(file_name_full_path.replace(".zip", "-temp/mainTemplate.json"), "wt", encoding="utf8") as fin:
         fin.write(data)

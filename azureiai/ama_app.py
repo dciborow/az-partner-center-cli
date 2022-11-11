@@ -37,5 +37,6 @@ def main():
     }
 
     output = commands[args.command]()
-    json_output = json.dumps(output, default=lambda x: hasattr(x, "__dict__") if x.__dict__ else x)
-    return json_output
+    return json.dumps(
+        output, default=lambda x: hasattr(x, "__dict__") if x.__dict__ else x
+    )

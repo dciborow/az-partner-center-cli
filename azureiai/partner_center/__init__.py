@@ -11,9 +11,10 @@ from azureiai.partner_center.plan import PlanCLIParser
 
 def run(submission: CLIParser):
     """CLI Application"""
-    subgroup = sys.argv[1]
     command = sys.argv[2]
-    help_text = f"""
+    if command in ["--help", "-h"]:
+        subgroup = sys.argv[1]
+        return f"""
     Group:
         azpc {subgroup}: Manage Partner Center submissions.
 
@@ -29,8 +30,6 @@ def run(submission: CLIParser):
         publish : publish Application
         release : release Application
         status  : status Application"""
-    if command in ["--help", "-h"]:
-        return help_text
 
     commands = {
         "create": submission.create,
@@ -49,10 +48,11 @@ def run(submission: CLIParser):
 
 def run_plan():
     """CLI Application"""
-    subgroup = sys.argv[1]
-    command = sys.argv[2]
     plan_command = sys.argv[3]
-    help_text = f"""
+    if plan_command in ["--help", "-h"]:
+        subgroup = sys.argv[1]
+        command = sys.argv[2]
+        return f"""
     Group:
         azpc {subgroup} {command}: Manage Partner Center Plan submissions.
 
@@ -64,8 +64,6 @@ def run_plan():
         delete  : delete Application Plan
         publish : publish Application Plan
 """
-    if plan_command in ["--help", "-h"]:
-        return help_text
 
     plan = PlanCLIParser()
     commands = {

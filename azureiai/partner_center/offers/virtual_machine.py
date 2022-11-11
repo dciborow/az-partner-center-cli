@@ -2,6 +2,7 @@
 #  Copyright (c) Microsoft Corporation. All rights reserved.
 #  ---------------------------------------------------------
 """CLI Wrapper for Creating, Updating, or Deleting Azure Virtual Machines"""
+
 import json
 import os
 from pathlib import Path
@@ -17,7 +18,7 @@ from azureiai.partner_center.submission import Submission
 AZURE_VIRTUAL_MACHINE = "AzureThirdPartyVirtualMachine"
 RESOURCE_CPP_API = "https://cloudpartner.azure.com"
 RESOURCE_PC_API = "https://api.partner.microsoft.com"
-URL_BASE = RESOURCE_CPP_API + "/api/publishers"
+URL_BASE = f"{RESOURCE_CPP_API}/api/publishers"
 
 
 class VirtualMachine(Submission):

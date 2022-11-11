@@ -47,10 +47,11 @@ class Plan(Submission):
             "resourceType": "AzureSkuVariant",
             "state": "Active",
             "friendlyName": self.plan_name.replace("-", " "),
-            "leadGenID": "publisher_name." + self.plan_name,
+            "leadGenID": f"publisher_name.{self.plan_name}",
             "externalID": self.plan_name,
             "cloudAvailabilities": ["public-azure"],
         }
+
         if self.subtype == "ma":
             body["SubType"] = "managed-application"
         elif self.subtype == "st":

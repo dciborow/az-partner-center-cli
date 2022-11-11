@@ -67,7 +67,11 @@ def test_vm_get(config_yml, monkeypatch, app_path_fix):
         offer_id = json_config["id"]
 
         url = f"https://cloudpartner.azure.com/api/publishers/{publisher_id}/offers/{offer_id}?api-version=2017-10-31"
-        headers = {"Authorization": "Bearer " + management_access_key(), "Content-Type": "application/json"}
+        headers = {
+            "Authorization": f"Bearer {management_access_key()}",
+            "Content-Type": "application/json",
+        }
+
 
         response = requests.get(url, headers=headers)
         assert response.status_code == 200, json.dumps(response.json(), indent=4)
@@ -104,7 +108,11 @@ def test_vm_update(config_yml, monkeypatch, app_path_fix):
         offer_id = json_config["id"]
 
         url = f"https://cloudpartner.azure.com/api/publishers/{publisher_id}/offers/{offer_id}?api-version=2017-10-31"
-        headers = {"Authorization": "Bearer " + management_access_key(), "Content-Type": "application/json"}
+        headers = {
+            "Authorization": f"Bearer {management_access_key()}",
+            "Content-Type": "application/json",
+        }
+
 
         response = requests.put(url, json=json_config, headers=headers)
         assert response.status_code == 200, json.dumps(response.json(), indent=4)
@@ -127,7 +135,7 @@ def _get_access_key(resource):
     aad_id = credential()["aad_id"]
     secret = credential()["aad_secret"]
 
-    url = "https://login.microsoftonline.com/%s/oauth2/token" % tenant_id
+    url = f"https://login.microsoftonline.com/{tenant_id}/oauth2/token"
     headers = {"content-type": "application/x-www-form-urlencoded"}
     data = {"grant_type": "client_credentials", "client_id": aad_id, "client_secret": secret, "resource": resource}
 
@@ -161,12 +169,12 @@ def test_vm_list(config_yml, monkeypatch, capsys):
 @pytest.mark.integration
 def test_vm_create_success(config_yml, monkeypatch, app_path_fix, json_listing_config, vm_offer_teardown, capsys):
     json_listing_config = "vm_config.json"
-    app_path_fix = "tests/sample_app"
-
-    offer_response = vm_create_command(config_yml, json_listing_config, monkeypatch, capsys)
-
-    if offer_response:
+    if offer_response := vm_create_command(
+        config_yml, json_listing_config, monkeypatch, capsys
+    ):
         offer = json.loads(offer_response)
+        app_path_fix = "tests/sample_app"
+
         with open(Path(app_path_fix).joinpath(json_listing_config), "r", encoding="utf8") as read_file:
             json_config = json.load(read_file)
 

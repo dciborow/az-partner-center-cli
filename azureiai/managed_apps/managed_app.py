@@ -178,24 +178,55 @@ class ManagedApplication(Offer):
             "resourceType": "SubmissionCreationRequest",
             "targets": [{"type": "Scope", "value": "preview"}],
             "resources": [
-                {"type": "Availability", "value": self._get_draft_instance_id("Availability")},
-                {"type": "Property", "value": self._get_draft_instance_id("Property")},
-                {"type": "Package", "value": self._get_draft_instance_id("Package")},
-                {"type": "Listing", "value": self._get_draft_instance_id("Listing")},
+                {
+                    "type": "Availability",
+                    "value": self._get_draft_instance_id("Availability"),
+                },
+                {
+                    "type": "Property",
+                    "value": self._get_draft_instance_id("Property"),
+                },
+                {
+                    "type": "Package",
+                    "value": self._get_draft_instance_id("Package"),
+                },
+                {
+                    "type": "Listing",
+                    "value": self._get_draft_instance_id("Listing"),
+                },
                 {"type": "Cosell", "value": self._get_draft_instance_id("Cosell")},
-                {"type": "ResellerConfiguration", "value": self.get_product_id() + "-ResellerInstance"},
+                {
+                    "type": "ResellerConfiguration",
+                    "value": f"{self.get_product_id()}-ResellerInstance",
+                },
             ],
             "variantResources": [
                 {
                     "variantID": self._ids["plan_id"],
                     "resources": [
-                        {"type": "Availability", "value": self._get_variant_draft_instance_id("Availability")},
-                        {"type": "Package", "value": self._get_variant_draft_instance_id("Package")},
-                        {"type": "Listing", "value": self._get_variant_draft_instance_id("Listing")},
+                        {
+                            "type": "Availability",
+                            "value": self._get_variant_draft_instance_id(
+                                "Availability"
+                            ),
+                        },
+                        {
+                            "type": "Package",
+                            "value": self._get_variant_draft_instance_id(
+                                "Package"
+                            ),
+                        },
+                        {
+                            "type": "Listing",
+                            "value": self._get_variant_draft_instance_id(
+                                "Listing"
+                            ),
+                        },
                     ],
                 }
             ],
         }
+
 
         response = self._apis["submission"].products_product_id_submissions_post(
             authorization=self.get_auth(),
@@ -258,11 +289,12 @@ class ManagedApplication(Offer):
             "resourceType": "AzureSkuVariant",
             "state": "Active",
             "friendlyName": plan_name,
-            "leadGenID": "publisher_name." + self.name + plan_name,
+            "leadGenID": f"publisher_name.{self.name}{plan_name}",
             "externalID": self.name + plan_name,
             "cloudAvailabilities": ["public-azure"],
             "SubType": "managed-application",
         }
+
 
         try:
             api_response = self._apis["variant"].products_product_id_variants_post(
