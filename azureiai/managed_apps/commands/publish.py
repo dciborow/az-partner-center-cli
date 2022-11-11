@@ -18,7 +18,6 @@ def run():
 
     response = ama.publish()
 
-    url = "https://partner.microsoft.com/en-us/dashboard/commercial-marketplace/offers/%s/overview" % args.product_id
-    output = {"response": response, "url": url, "plan_id": ama.get_plan_id()}
+    url = f"https://partner.microsoft.com/en-us/dashboard/commercial-marketplace/offers/{args.product_id}/overview"
 
-    return output
+    return {"response": response, "url": url, "plan_id": ama.get_plan_id()}

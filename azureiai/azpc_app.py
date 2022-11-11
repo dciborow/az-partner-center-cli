@@ -15,7 +15,9 @@ from azureiai.partner_center.offers.virtual_machine import VirtualMachineCLI
 
 def main():
     """CLI Application"""
-    help_text = """
+    subgroup = sys.argv[1]
+    if subgroup in ["--help", "-h"]:
+        return """
     Group:
         azpc : Manage Partner Center submissions.
 
@@ -26,9 +28,6 @@ def main():
         vm       : Virtual Machine Images
         co       : Containers
 """
-    subgroup = sys.argv[1]
-    if subgroup in ["--help", "-h"]:
-        return help_text
 
     commands = {
         "app": ApplicationCLI,

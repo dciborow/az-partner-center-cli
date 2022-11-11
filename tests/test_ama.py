@@ -127,7 +127,7 @@ def test_ama_2nd_plan(ama, plan_name, app_path_fix, app_zip, json_listing_config
     assert published
     assert published.id
 
-    ama._create_new_plan(plan_name=plan_name + "2")
+    ama._create_new_plan(plan_name=f"{plan_name}2")
 
 
 @pytest.mark.integration

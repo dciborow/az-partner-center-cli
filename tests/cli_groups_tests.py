@@ -65,7 +65,7 @@ def _update_plan_args(config_yml, config_json, subgroup):
 
 
 def _show_plan_args(config_yml, subgroup):
-    input_args = {
+    return {
         "subgroup": subgroup,
         "command": "plan",
         "plan_command": "show",
@@ -73,22 +73,20 @@ def _show_plan_args(config_yml, subgroup):
         "plan_name": f"test_{subgroup}_plan",
         "config_yml": config_yml,
     }
-    return input_args
 
 
 def _list_plan_args(config_yml, subgroup):
-    input_args = {
+    return {
         "subgroup": subgroup,
         "command": "plan",
         "plan_command": "list",
         "name": f"test_{subgroup}",
         "config_yml": config_yml,
     }
-    return input_args
 
 
 def _delete_plan_args(config_yml, subgroup):
-    input_args = {
+    return {
         "subgroup": subgroup,
         "command": "plan",
         "plan_command": "delete",
@@ -96,12 +94,15 @@ def _delete_plan_args(config_yml, subgroup):
         "plan_name": f"test_{subgroup}_plan",
         "config_yml": config_yml,
     }
-    return input_args
 
 
 def _show_command_args(config_yml, subgroup):
-    input_args = {"subgroup": subgroup, "command": "show", "name": f"test_{subgroup}", "config_yml": config_yml}
-    return input_args
+    return {
+        "subgroup": subgroup,
+        "command": "show",
+        "name": f"test_{subgroup}",
+        "config_yml": config_yml,
+    }
 
 
 def _list_command_args(config_yml, subgroup):
@@ -109,7 +110,7 @@ def _list_command_args(config_yml, subgroup):
 
 
 def _publish_command_args(config_yml, subgroup):
-    input_args = {
+    return {
         "subgroup": subgroup,
         "command": "publish",
         "name": f"test_{subgroup}",
@@ -117,11 +118,10 @@ def _publish_command_args(config_yml, subgroup):
         "notification_emails": "dcibs@microsoft.com",
         "app_path": APP_PATH,
     }
-    return input_args
 
 
 def _release_command_args(config_yml, subgroup):
-    input_args = {
+    return {
         "subgroup": subgroup,
         "command": "release",
         "name": f"test_{subgroup}",
@@ -129,12 +129,15 @@ def _release_command_args(config_yml, subgroup):
         "notification_emails": "dcibs@microsoft.com",
         "app_path": APP_PATH,
     }
-    return input_args
 
 
 def _delete_command_args(config_yml, subgroup):
-    input_args = {"subgroup": subgroup, "command": "delete", "name": f"test_{subgroup}", "config_yml": config_yml}
-    return input_args
+    return {
+        "subgroup": subgroup,
+        "command": "delete",
+        "name": f"test_{subgroup}",
+        "config_yml": config_yml,
+    }
 
 
 def vm_create_command(config_yml, json_config, monkeypatch, capsys):
@@ -361,7 +364,7 @@ def args_test(monkeypatch, input_args, capsys):
 def _assert_properties(offer, json_listing_config):
     """Assert Properties"""
     properties = Properties(offer.get_product_id(), offer.get_auth()).get().to_dict()
-    print("Properties" + str(properties))
+    print(f"Properties{str(properties)}")
     assert properties
 
     assert properties["app_version"] == json_listing_config["plan_overview"][0]["technical_configuration"]["version"]
@@ -384,7 +387,7 @@ def _assert_properties(offer, json_listing_config):
 def _assert_offer_listing(offer, json_listing_config):
     """Assert Offer Listing"""
     offer_listing = Listing(offer.get_product_id(), offer.get_auth()).get().to_dict()
-    print("Offer Listing: " + str(offer_listing))
+    print(f"Offer Listing: {str(offer_listing)}")
     assert offer_listing
     assert offer_listing["odata_etag"]
     assert offer_listing["id"]
@@ -422,7 +425,7 @@ def _assert_vm_empty_listing(vm_list):
 def _assert_preview_audience(offer, json_listing_config):
     """Assert Preview Audience"""
     availability = ProductAvailability(offer.get_product_id(), offer.get_auth()).get().to_dict()
-    print("Availability: " + str(availability))
+    print(f"Availability: {str(availability)}")
     assert availability
     assert availability["odata_etag"]
     assert availability["id"]
@@ -437,7 +440,7 @@ def _assert_preview_audience(offer, json_listing_config):
 def _assert_plan_listing(offer, json_listing_config):
     """Assert Preview Audience"""
     offer_listing = OfferListing(offer.get_product_id(), offer.get_auth()).get().to_dict()
-    print("Offer Listing: " + str(offer_listing))
+    print(f"Offer Listing: {str(offer_listing)}")
     assert offer_listing
     assert (
         offer_listing["short_description"]
@@ -450,14 +453,14 @@ def _assert_plan_listing(offer, json_listing_config):
 def _assert_pricing_and_availability(offer, json_listing_config):
     """Assert Preview Audience"""
     pricing_and_availability = FeatureAvailability(offer.get_product_id(), offer.get_auth()).get().to_dict()
-    print("Pricing & Availability: " + str(pricing_and_availability))
+    print(f"Pricing & Availability: {str(pricing_and_availability)}")
     assert pricing_and_availability
 
 
 def _assert_technical_configuration(offer, json_listing_config):
     """Assert Preview Audience"""
     tech_configuration = Package(offer.get_product_id(), offer.get_auth()).get()
-    print("Technical Configuration: " + str(tech_configuration))
+    print(f"Technical Configuration: {str(tech_configuration)}")
     assert tech_configuration
 
 
@@ -547,7 +550,7 @@ def _assert_vm_properties(offer, json_listing_config, detailed=0):
     # The "show" command returns more details in offer properties
     if detailed:
         assert offer["microsoft-azure-marketplace.universalAmendmentTerms"] == ""
-        assert offer["microsoft-azure-marketplace.customAmendments"] == None
+        assert offer["microsoft-azure-marketplace.customAmendments"] is None
         assert offer["microsoft-azure-marketplace.useEnterpriseContract"] == False
 
 

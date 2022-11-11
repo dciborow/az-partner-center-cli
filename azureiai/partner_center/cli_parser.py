@@ -92,8 +92,7 @@ class CLIParser:
 
     def _add_name_argument(self):
         self.parser.add_argument(self._name, type=str, help="Managed App Name")
-        args = self.parser.parse_args()
-        return args
+        return self.parser.parse_args()
 
     def _add_name_config_json_argument(self):
         self.parser.add_argument(self._name, type=str, help="Managed App Name")
@@ -101,8 +100,7 @@ class CLIParser:
             self._config_json, type=str, help="Listing Configuration Json", default="listing_config.json"
         )
         self.parser.add_argument(self._app_path, type=str, help="Application Root Directory", default=".")
-        args = self.parser.parse_args()
-        return args
+        return self.parser.parse_args()
 
     def _add_name_notification_emails_argument(self):
         self.parser.add_argument(self._name, type=str, required=True, help="Managed App Name")
@@ -114,5 +112,4 @@ class CLIParser:
             self._config_json, type=str, help="Listing Configuration Json", default="listing_config.json"
         )
         self.parser.add_argument(self._app_path, type=str, help="Application Root Directory", default=".")
-        args = self.parser.parse_args()
-        return args
+        return self.parser.parse_args()

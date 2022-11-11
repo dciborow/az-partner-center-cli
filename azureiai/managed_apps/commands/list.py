@@ -21,5 +21,4 @@ def run():
     args = parser.parse_args()
     config_yml = args.config_yml
     ama = ManagedApplication(config_yaml=config_yml)
-    offers = ama.get_offers()
-    return offers
+    return ama.get_offers()

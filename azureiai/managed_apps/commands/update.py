@@ -29,13 +29,12 @@ def run():
         config_yml=config_yml,
         update_image=True,
     )
-    url = "https://partner.microsoft.com/en-us/dashboard/commercial-marketplace/offers/%s/overview" % args.product_id
-    output = {
+    url = f"https://partner.microsoft.com/en-us/dashboard/commercial-marketplace/offers/{args.product_id}/overview"
+
+    return {
         "ama-name": args.ama_name,
         "product-id": args.product_id,
         "offer-id": args.offer_id,
         "response": response,
         "url": url,
     }
-
-    return output

@@ -79,10 +79,9 @@ class Submission(Offer):
         """List Azure Submissions."""
         if not self._ids["product_id"]:
             self.show()
-        api_response = self._apis["product"].products_product_id_delete(
+        return self._apis["product"].products_product_id_delete(
             product_id=self._ids["product_id"], authorization=self.get_auth()
         )
-        return api_response
 
     def publish(self):
         """Publish Submission by submitting Instance IDs"""
@@ -92,14 +91,30 @@ class Submission(Offer):
             "resourceType": "SubmissionCreationRequest",
             "targets": [{"type": "Scope", "value": "preview"}],
             "resources": [
-                {"type": "Availability", "value": self._get_draft_instance_id("Availability")},
-                {"type": "Property", "value": self._get_draft_instance_id("Property")},
-                {"type": "Package", "value": self._get_draft_instance_id("Package")},
-                {"type": "Listing", "value": self._get_draft_instance_id("Listing")},
-                {"type": "ResellerConfiguration", "value": self.get_product_id() + "-ResellerInstance"},
+                {
+                    "type": "Availability",
+                    "value": self._get_draft_instance_id("Availability"),
+                },
+                {
+                    "type": "Property",
+                    "value": self._get_draft_instance_id("Property"),
+                },
+                {
+                    "type": "Package",
+                    "value": self._get_draft_instance_id("Package"),
+                },
+                {
+                    "type": "Listing",
+                    "value": self._get_draft_instance_id("Listing"),
+                },
+                {
+                    "type": "ResellerConfiguration",
+                    "value": f"{self.get_product_id()}-ResellerInstance",
+                },
             ],
             "variantResources": [],
         }
+
 
         response = self._apis["variant"].products_product_id_variants_get(
             product_id=self._ids["product_id"], authorization=self.get_auth()

@@ -31,11 +31,10 @@ def run():
         raise FileNotFoundError("Manifest File not found: ", manifest_yml)
     prepared = ama.manifest_publish(manifest_yml=manifest_yml, config_yml=config_yml)
 
-    output = {
+    return {
         "ama_name": ama_name,
         "product_id": ama.get_product_id(),
         "offer_id": ama.get_offer_id(),
         "prepared": prepared,
         "plan_id": ama.get_plan_id(),
     }
-    return output
